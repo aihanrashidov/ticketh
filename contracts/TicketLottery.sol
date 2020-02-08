@@ -1,12 +1,19 @@
 pragma solidity >=0.5.0 <0.7.0;
+import "./OraclizeAPI.sol";
 
-contract TicketLottery {
-    address public ownerAddress;
+contract TicketLottery is usingOraclize {
+    address public contractAddress;
     address payable[] public playersAddress;
     address self = address(this);
 
     constructor() public {
-        ownerAddress = msg.sender;
+        contractAddress = msg.sender;
+        oraclize_query(1 * day, "URL", "");
+    }
+
+    function __callback(bytes32, string memory) public {
+        // require(msg.sender == oraclize_cbAddress(), "Addresses not matching.");
+        pickWinner();
     }
 
     function buyTicket() public payable {
@@ -22,11 +29,7 @@ contract TicketLottery {
         return
             uint256(
                 keccak256(
-                    abi.encodePacked(
-                        block.difficulty,
-                        block.timestamp,
-                        playersAddress
-                    )
+                    abi.encodePacked(block.difficulty, now, playersAddress)
                 )
             );
     }
@@ -46,12 +49,11 @@ contract TicketLottery {
         return playersAddress.length;
     }
 
-    function getPlayers() public view returns (address payable[] memory) {
-        return playersAddress;
-    }
-
     modifier restricted() {
-        require(msg.sender == ownerAddress, "Allowed only by lottery owner.");
+        require(
+            msg.sender == contractAddress,
+            "Allowed only by lottery owner."
+        );
         _;
     }
 }

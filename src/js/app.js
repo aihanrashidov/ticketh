@@ -10,15 +10,15 @@ App = {
   },
 
   initWeb3: function () {
-    // if (typeof web3 !== 'undefined') {
-    //   // If a web3 instance is already provided by Meta Mask.
-    //   App.web3Provider = web3.currentProvider;
-    //   web3 = new Web3(web3.currentProvider);
-    // } else {
-    // Specify default instance if no web3 instance provided
-    App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
-    web3 = new Web3(App.web3Provider);
-    // }
+    if (typeof web3 !== 'undefined') {
+      // If a web3 instance is already provided by Meta Mask.
+      App.web3Provider = web3.currentProvider;
+      web3 = new Web3(web3.currentProvider);
+    } else {
+      // Specify default instance if no web3 instance provided
+      App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+      web3 = new Web3(App.web3Provider);
+    }
     return App.initContract();
   },
 
@@ -43,16 +43,13 @@ App = {
     getPlayers()
     getTicketsCount()
     getContractBalance()
-
-
-
   },
 
   buy: function () {
     var TicketLotteryInstance;
     App.contracts.TicketLottery.deployed().then(function (instance) {
       TicketLotteryInstance = instance;
-      return TicketLotteryInstance.buyTicket();
+      return TicketLotteryInstance.buyTicket({ value: web3.toWei(0.01, 'ether') });
     }).then(function (msg) {
       console.log(msg)
     }).catch(function (error) {
@@ -67,17 +64,6 @@ $(function () {
   });
 });
 
-function getPlayers() {
-  App.contracts.TicketLottery.deployed().then(function (instance) {
-    TicketLotteryInstance = instance;
-    return TicketLotteryInstance.getPlayers();
-  }).then(function (players) {
-    console.log(players)
-  }).catch(function (error) {
-    console.warn(error);
-  });
-};
-
 function getTicketsCount() {
   App.contracts.TicketLottery.deployed().then(function (instance) {
     TicketLotteryInstance = instance;
@@ -85,7 +71,7 @@ function getTicketsCount() {
   }).then(function (tickets) {
     $("#tickets").html(tickets.toFixed(0));
   }).catch(function (error) {
-    console.warn(error);
+    console.log(error);
   });
 };
 
@@ -94,9 +80,9 @@ function getContractBalance() {
     TicketLotteryInstance = instance;
     return TicketLotteryInstance.getContractBalance();
   }).then(function (balance) {
-    $("#prize").html(balance.toFixed(2) + ' ETH');
+    $("#prize").html(web3.fromWei(balance.toNumber(), 'ether') + ' ETH');
   }).catch(function (error) {
-    console.warn(error);
+    console.log(error);
   });
 };
 
@@ -124,7 +110,6 @@ function getBal() {
 };
 
 $('#buy').click(function () {
-  console.log("ENTERS BUY")
   App.buy();
 });
 
