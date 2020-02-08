@@ -1,0 +1,2 @@
+# ticketh
+SImple ethereum lottery.
