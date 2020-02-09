@@ -34,24 +34,41 @@ App = {
   },
 
   render: function () {
-    var TicketLotteryInstance;
-
     // Load account data
     loadAccData()
 
     // Load contract data
-    getPlayers()
     getTicketsCount()
     getContractBalance()
-  },
 
+    // Go to the event listener
+    return App.events()
+  },
+  events: function () {
+    var TicketLotteryInstance;
+    App.contracts.TicketLottery.deployed().then(function (instance) {
+      TicketLotteryInstance = instance;
+      let ticketEvent = TicketLotteryInstance.Render();
+
+      ticketEvent.watch(function (error, msg) {
+        if (!error) {
+          $("#tickets").html(msg.args.ticketsLeft.toFixed(0));
+          $("#prize").html(web3.fromWei(msg.args.contractBalance.toNumber(), 'ether') + ' ETH');
+          loadAccData();
+        } else {
+          console.log(error);
+        }
+      });
+    });
+  },
   buy: function () {
     var TicketLotteryInstance;
     App.contracts.TicketLottery.deployed().then(function (instance) {
       TicketLotteryInstance = instance;
-      return TicketLotteryInstance.buyTicket({ value: web3.toWei(0.01, 'ether') });
+      return TicketLotteryInstance.buyTicket({ value: web3.toWei(0.01, 'ether'), gasPrice: web3.toWei(1, 'gwei') });
     }).then(function (msg) {
       console.log(msg)
+      loadAccData();
     }).catch(function (error) {
       console.log(error);
     });

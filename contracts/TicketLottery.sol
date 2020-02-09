@@ -1,18 +1,28 @@
-pragma solidity >=0.5.0 <0.7.0;
+pragma solidity >=0.4.24 <0.7.0;
 import "./OraclizeAPI.sol";
 
 contract TicketLottery is usingOraclize {
-    address public contractAddress;
+    event Render(uint256 contractBalance, uint256 ticketsLeft);
+
+    address payable public contractAddress;
     address payable[] public playersAddress;
     address self = address(this);
+    uint256 tickets;
+    uint256 schedulerAmount;
 
-    constructor() public {
+    constructor() public payable {
         contractAddress = msg.sender;
-        oraclize_query(1 * day, "URL", "");
+        tickets = 0;
+        oraclize_query(30, "URL", "");
+        schedulerAmount = self.balance;
     }
 
-    function __callback(bytes32, string memory) public {
-        // require(msg.sender == oraclize_cbAddress(), "Addresses not matching.");
+    function __callback(
+        bytes32 _queryId,
+        string memory _result,
+        bytes memory _proof
+    ) public {
+        require(msg.sender == oraclize_cbAddress(), "Failed.");
         pickWinner();
     }
 
@@ -21,8 +31,18 @@ contract TicketLottery is usingOraclize {
             msg.value >= 0.01 ether,
             "Minimum to enter the lottery is 0.01 ETH"
         );
+        tickets++;
+        emit Render(self.balance - schedulerAmount, tickets);
+    }
 
-        playersAddress.push(msg.sender);
+    function pickWinner() public {
+        // uint256 index = getRandomPlayer() % playersAddress.length;
+        // playersAddress[index].transfer(self.balance - schedulerAmount);
+        // playersAddress = new address payable[](0);
+        tickets++;
+        oraclize_query(30, "URL", "");
+        // schedulerAmount = self.balance;
+        emit Render(self.balance - schedulerAmount, tickets);
     }
 
     function getRandomPlayer() private view returns (uint256) {
@@ -34,26 +54,15 @@ contract TicketLottery is usingOraclize {
             );
     }
 
-    function pickWinner() public restricted {
-        uint256 index = getRandomPlayer() % playersAddress.length;
-        playersAddress[index].transfer(address(this).balance);
-
-        playersAddress = new address payable[](0);
-    }
-
     function getContractBalance() public view returns (uint256) {
-        return self.balance;
+        return self.balance - schedulerAmount;
     }
 
     function getTicketsCount() public view returns (uint256) {
-        return playersAddress.length;
+        return tickets;
     }
 
-    modifier restricted() {
-        require(
-            msg.sender == contractAddress,
-            "Allowed only by lottery owner."
-        );
-        _;
+    function getSchedulerAmount() public view returns (uint256) {
+        return schedulerAmount;
     }
 }

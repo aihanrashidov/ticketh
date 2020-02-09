@@ -1,11 +1,19 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+const MNEMONIC = process.env.MNEMONIC_WALLET_KEY;
+
 module.exports = {
-  // See <http://truffleframework.com/docs/advanced/configuration>
-  // for more about customizing your Truffle configuration!
   networks: {
     development: {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*"
+    },
+    ropsten: {
+      provider: function () {
+        return new HDWalletProvider(MNEMONIC, "https://ropsten.infura.io/v3/" + process.env.ROPSTEN_PROJECT_ID)
+      },
+      network_id: 3,
+      gas: 4000000
     }
   }
 };
