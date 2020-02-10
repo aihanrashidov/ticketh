@@ -52,8 +52,9 @@ App = {
 
       ticketEvent.watch(function (error, msg) {
         if (!error) {
-          $("#tickets").html(msg.args.ticketsLeft.toFixed(0));
+          $("#tickets").html(msg.args.ticketsLeft.toNumber());
           $("#prize").html(web3.fromWei(msg.args.contractBalance.toNumber(), 'ether') + ' ETH');
+          console.log("ADDRESSES: " + JSON.stringify(msg.args));
           loadAccData();
         } else {
           console.log(error);

@@ -13,35 +13,32 @@ contract TicketLottery is usingOraclize {
     constructor() public payable {
         contractAddress = msg.sender;
         tickets = 0;
-        oraclize_query(30, "URL", "");
+        oraclize_query(60, "URL", "");
         schedulerAmount = self.balance;
     }
 
-    function __callback(
-        bytes32 _queryId,
-        string memory _result,
-        bytes memory _proof
-    ) public {
+    function __callback(bytes32, string memory, bytes memory) public {
         require(msg.sender == oraclize_cbAddress(), "Failed.");
-        pickWinner();
+        if (playersAddress.length != 0) {
+            uint256 index = getRandomPlayer() % playersAddress.length;
+            playersAddress[index].transfer(
+                self.balance - schedulerAmount - 0.005 ether
+            );
+            playersAddress = new address payable[](0);
+        }
+        oraclize_query(60, "URL", "");
+        schedulerAmount = self.balance;
+        tickets = 0;
+        emit Render(self.balance - schedulerAmount, tickets);
     }
 
     function buyTicket() public payable {
         require(
-            msg.value >= 0.01 ether,
+            msg.value >= 0.02 ether,
             "Minimum to enter the lottery is 0.01 ETH"
         );
+        playersAddress.push(msg.sender);
         tickets++;
-        emit Render(self.balance - schedulerAmount, tickets);
-    }
-
-    function pickWinner() public {
-        // uint256 index = getRandomPlayer() % playersAddress.length;
-        // playersAddress[index].transfer(self.balance - schedulerAmount);
-        // playersAddress = new address payable[](0);
-        tickets++;
-        oraclize_query(30, "URL", "");
-        // schedulerAmount = self.balance;
         emit Render(self.balance - schedulerAmount, tickets);
     }
 
@@ -64,5 +61,9 @@ contract TicketLottery is usingOraclize {
 
     function getSchedulerAmount() public view returns (uint256) {
         return schedulerAmount;
+    }
+
+    function getPlayers() public view returns (address payable[] memory) {
+        return playersAddress;
     }
 }
