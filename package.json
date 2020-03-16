@@ -3,19 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "truffle.js",
-  "directories": {
-    "test": "test"
-  },
+  "directories": {},
   "scripts": {
-    "dev": "lite-server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./bin/www"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.3.0"
+    "nodemon": "^2.0.2",
+    "@chainlink/contracts": "0.0.3"
   },
   "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2",
+    "oneclick": "^1.0.2",
     "truffle-hdwallet-provider": "^1.0.17"
   }
 }

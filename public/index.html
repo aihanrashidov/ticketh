@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ticketh</title>
+
+  <link href="css/app.css" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Quantico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.13.0/css/mdb.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.13.0/js/mdb.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+  <script src="js/jdenticon.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
+  <link rel="shortcut icon" href="./images/metamask-app.png">
+
+</head>
+
+<body>
+  <div class='lottery'>
+
+    <div class='hdr'>
+      <div class='page-title'>
+        <label>ticketh</label>
+      </div>
+      <label style='width: 100%; text-align: center; margin-bottom: 0;'> the simpliest eth lottery</label>
+
+      <div class='info-btns'>
+        <button type="button" class="btn btn-outline-secondary waves-effect" id="how-to">how it works</button>
+        <button type="button" class="btn btn-outline-secondary waves-effect" id="useage">how to use</button>
+        <button type="button" class="btn btn-outline-secondary waves-effect" id="contract">contract code</button>
+      </div>
+
+      <div class='scl-media'>
+        <a href="#" class="btn-floating btn-lg btn-fb" type="button" role="button"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="btn-floating btn-lg btn-tw" type="button" role="button"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="btn-floating btn-lg btn-fb" type="button" role="button"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <div class='game'>
+      <div class='how-it-works'>
+        <div class='top-nav'>
+          <h3>Here you will learn how ticketh works.</h3>
+          <button type="button" class="btn btn-outline-secondary waves-effect" id="back1">back to app</button>
+        </div>
+
+        <div style="padding-top: 1.8%;">
+          <label>Ticketh is a decentralized ethereum lottery application. </label>
+
+          <h5>Requirements:</h5>
+          <ul>
+            <li><a target="_blank" href="https://www.google.com/intl/en_en/chrome/">Chrome</a> or <a target="_blank" href="https://www.mozilla.org/en-US/firefox/">Firefox</a> browser.</li>
+            <li><a target="_blank" href='https://metamask.io/'>Metamask</a></li>
+          </ul>
+
+          <h5>Rules:</h5>
+          <ul>
+            <li>Every player can buy more than one ticket. (buy more tickets if you are not the only player)</li>
+            <li>Every player can participate in more than one lottery.</li>
+            <li style="font-weight: 700; color: rgb(143, 27, 27);">Lottery starts when first ticket is bought for the
+              round.</li>
+            <li>The lottery duration is current block number when starting + duration blocks.</li>
+            <li>Once the current block number reaches the lottery block number only one more ticket can be submitted.
+            </li>
+            <li style="font-weight: 700; color: rgb(143, 27, 27);">When the last ticket is submitted the lottery ends
+              and a winner is selected.</li>
+            <li>Winner is determined by a random number and prize is received within seconds.</li>
+            <li>Prize is calculated when there is more than one participant. 10% tax is for the lottery owner.</li>
+            <li>Displayed prize includes the last entry.</li>
+          </ul>
+
+          <h5>Randomness:</h5>
+          <label>Unpredictable randomness is achieved by using the <a target="_blank" href="https://chain.link/">Chainlink</a> decentralized oracles.</label>
+
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="lot1-tab" data-toggle="tab" href="#lot1" role="tab" aria-controls="home"
+                aria-selected="true">Lottery 1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="lot2-tab" data-toggle="tab" href="#lot2" role="tab" aria-controls="profile"
+                aria-selected="false">Lottery 2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="lot3-tab" data-toggle="tab" href="#lot3" role="tab" aria-controls="contact"
+                aria-selected="false">Lottery 3</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="lot4-tab" data-toggle="tab" href="#lot4" role="tab" aria-controls="contact"
+                aria-selected="false">Lottery 4</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="lot1" role="tabpanel" aria-labelledby="lot1-tab">
+              <br>
+              <ul>
+                <li>5760 blocks duration (~24 hours)</li>
+                <li>0.03 ETH ticket price</li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="lot2" role="tabpanel" aria-labelledby="lot2-tab">
+              <br>
+              <ul>
+                <li>17280 blocks duration (~3 days)</li>
+                <li>0.05 ETH ticket price</li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="lot3" role="tabpanel" aria-labelledby="lot3-tab">
+              <br>
+              <ul>
+                <li>28800 blocks duration (~5 days)</li>
+                <li>0.10 ETH ticket price</li>
+              </ul>
+            </div>
+            <div class="tab-pane fade" id="lot4" role="tabpanel" aria-labelledby="lot4-tab">
+              <br>
+              <ul>
+                <li>40320 blocks duration (~7 days)</li>
+                <li>0.50 ETH ticket price</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='how-to-use'>
+        <div class='top-nav'>
+          <h3>Here you will learn how to participate in a lottery.</h3>
+          <button type="button" class="btn btn-outline-secondary waves-effect" id="back2">back to app</button>
+        </div>
+
+        <div style="padding-top: 1.8%;">
+          <label>Ticketh is designed to be simple and easy to use. </label>
+
+          <h5>How to buy a ticket:</h5>
+          <ol>
+            <li>
+              <label>Sign in to your Metamask account.</label>
+              <div class='tut-img1'>
+                <img src='./images/signin.png'>
+              </div>
+              <br>
+            </li>
+            <li>
+              <label>Enter your Metamask password connect with Ticketh.</label>
+              <div class='tut-img2'>
+                <img src='./images/metamasklogin.png'>
+                <img src='./images/metamaskconnect.png'>
+              </div>
+              <br>
+            </li>
+            <li>
+              <label>Select lottery.</label>
+              <div class='tut-img3'>
+                <img src='./images/select.png'>
+              </div>
+              <br>
+            </li>
+            <li>
+              <label>Press the buy button.</label>
+              <div class='tut-img3'>
+                <img src='./images/buy.png'>
+              </div>
+              <br>
+            </li>
+            <li>
+              <label>Confirm the purchase of your ticket.</label>
+              <div class='tut-img4'>
+                <img src='./images/metamaskbuy.png'>
+              </div>
+              <br>
+            </li>
+            <li>That's all. Good luck :)</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class='loading'>
+        <!-- <img src='./images/loading.gif' width="130" height="130"> </div> -->
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          style="margin:auto;background:#fff;display:block;" width="71px" height="71px" viewBox="0 0 100 100"
+          preserveAspectRatio="xMidYMid">
+          <g transform="translate(50 50) scale(0.8)">
+            <g transform="scale(0.50052 0.50052)">
+              <animateTransform attributeName="transform" type="scale" repeatCount="indefinite" calcMode="spline"
+                dur="1s" values="0.8;0.5;0.8" keyTimes="0;0.5;1" keySplines="0.5 0 0.5 1;0.5 0 0.5 1">
+              </animateTransform>
+              <rect x="-45" y="-45" width="90" height="90" fill="#ffffff" stroke="#7e176b" stroke-width="8"
+                stroke-linejoin="round" rx="48.2265" ry="48.2265" transform="rotate(270.468)">
+                <animate attributeName="rx" repeatCount="indefinite" dur="1s" values="0;50;0" keyTimes="0;0.5;1">
+                </animate>
+                <animate attributeName="ry" repeatCount="indefinite" dur="1s" values="0;50;0" keyTimes="0;0.5;1">
+                </animate>
+                <animate attributeName="stroke-width" repeatCount="indefinite" dur="1s" values="8;12.8;8"
+                  keyTimes="0;0.5;1"></animate>
+                <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s"
+                  values="0 0 0;270 0 0;540 0 0" keyTimes="0;0.5;1" calcMode="spline"
+                  keySplines="0.5 0 0.5 1;0.5 0 0.5 1"></animateTransform>
+              </rect>
+            </g>
+          </g>
+        </svg>
+        </div>
+        <div class='acc'>
+          <div class='signed'>
+            <div class='address'>
+              <canvas id="ic-owner" width="40" height="40"></canvas>
+              <label id='address'>0x0</label>
+            </div>
+            <div class='balance'>
+              <label><label id='bal-amount'><label id='eth'>0.00</label> ETH</label></label><img src='./images/eth.png'
+                style='margin-left: 5px;' width="10" height="15">
+            </div>
+          </div>
+          <div class='unsigned'>
+            <label>Please sign in to your Metamask account.</label>
+            <button type="button" class="btn btn-outline-secondary waves-effect" id="sign-in">sign in</button>
+          </div>
+        </div>
+        <hr style='width: 80%; margin-top: 0; margin-bottom: 0;'>
+        <div class='wrong-provider'>
+          <label>Ticketh only works on Mainnet and Rinkeby test nework. </label>
+        </div>
+        <div class='action'>
+          <div class='game-data-low'>
+            <div class='game-info'>
+              <div class="inf">
+                <label>Current round: <div class="numberCircle" id='round-low'>1</div></label>
+                <label>Ticket price: 0.03 ETH (without<a target="_blank" style='margin-left: 5px;'
+                    href='https://etherscan.io/gasTracker'>fee</a>)</label>
+                <label>Prize: <label style='margin-left: 5px;' id='prize-low'></label></label>
+                <label>Status: <div style="margin-left: 5px;" class="st" id='status-low'><span
+                      class="badge badge-success">active</span></div></label>
+              </div>
+              <div class='tickets'>
+                <label>Last entry will be available on block:</label>
+                <label style='color: purple;' id='block-low'></label>
+                <label>Current block:</label>
+                <label style='color: purple;' id='current-block-low'></label>
+              </div>
+            </div>
+            <div class='participants'>
+              <label id='p-label'>Participants:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='p-list-low'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+            <div class='winners'>
+              <label id='w-label'>Winners:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='w-list-low'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+          </div>
+
+          <div class='game-data-medium'>
+            <div class='game-info'>
+              <div class="inf">
+                <label>Current round: <div class="numberCircle" id='round-medium'>1</div></label>
+                <label>Ticket price: 0.05 ETH (without<a target="_blank" style='margin-left: 5px;'
+                    href='https://etherscan.io/gasTracker'>fee</a>)</label>
+                <label>Prize: <label style='margin-left: 5px;' id='prize-medium'></label></label>
+                <label>Status: <div style="margin-left: 5px;" class="st" id='status-medium'><span
+                      class="badge badge-success">active</span></div></label>
+              </div>
+              <div class='tickets'>
+                <label>Last entry will be available on block:</label>
+                <label style='color: purple;' id='block-medium'></label>
+                <label>Current block:</label>
+                <label style='color: purple;' id='current-block-medium'></label>
+              </div>
+            </div>
+            <div class='participants'>
+              <label id='p-label'>Participants:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='p-list-medium'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+            <div class='winners'>
+              <label id='w-label'>Winners:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='w-list-medium'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+          </div>
+
+          <div class='game-data-high'>
+            <div class='game-info'>
+              <div class="inf">
+                <label>Current round: <div class="numberCircle" id='round-high'>1</div></label>
+                <label>Ticket price: 0.10 ETH (without<a target="_blank" style='margin-left: 5px;'
+                    href='https://etherscan.io/gasTracker'>fee</a>)</label>
+                <label>Prize: <label style='margin-left: 5px;' id='prize-high'></label></label>
+                <label>Status: <div style="margin-left: 5px;" class="st" id='status-high'><span
+                      class="badge badge-success">active</span></div></label>
+              </div>
+              <div class='tickets'>
+                <label>Last entry will be available on block:</label>
+                <label style='color: purple;' id='block-high'></label>
+                <label>Current block:</label>
+                <label style='color: purple;' id='current-block-high'></label>
+              </div>
+            </div>
+            <div class='participants'>
+              <label id='p-label'>Participants:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='p-list-high'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+            <div class='winners'>
+              <label id='w-label'>Winners:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='w-list-high'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+          </div>
+
+          <div class='game-data-ultra'>
+            <div class='game-info'>
+              <div class="inf">
+                <label>Current round: <div class="numberCircle" id='round-ultra'>1</div></label>
+                <label>Ticket price: 0.50 ETH (without<a target="_blank" style='margin-left: 5px;'
+                    href='https://etherscan.io/gasTracker'>fee</a>)</label>
+                <label>Prize: <label style='margin-left: 5px;' id='prize-ultra'></label></label>
+                <label>Status: <div style="margin-left: 5px;" class="st" id='status-ultra'><span
+                      class="badge badge-success">active</span></div></label>
+              </div>
+              <div class='tickets'>
+                <label>Last entry will be available on block:</label>
+                <label style='color: purple;' id='block-ultra'></label>
+                <label>Current block:</label>
+                <label style='color: purple;' id='current-block-ultra'></label>
+              </div>
+            </div>
+            <div class='participants'>
+              <label id='p-label'>Participants:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='p-list-ultra'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+            <div class='winners'>
+              <label id='w-label'>Winners:</label>
+              <hr style='margin-top: 0; margin-bottom: 0;'>
+              <div class='w-list-ultra'>
+              </div>
+              <hr style='margin-top: 0;'>
+            </div>
+          </div>
+
+          <div class='games-nav'>
+            <div class='games-panel'>
+              <div
+                style='margin-left: 0.375rem; text-align: center; display: flex; flex-direction: row; align-items: center; justify-content: center;'>
+                <label style="margin-bottom: 0; margin-right: 4px;">select lottery</label><i
+                  class="fas fa-angle-double-down"></i></div>
+              <button type="button" class="btn btn-outline-secondary waves-effect" id="game-low" data-type="low"
+                data-selected="selected">low price</button>
+              <button type="button" class="btn btn-outline-secondary waves-effect" id="game-medium" data-type="medium"
+                data-selected="none">medium price</button>
+              <button type="button" class="btn btn-outline-secondary waves-effect" id="game-high" data-type="high"
+                data-selected="none">high price</button>
+              <button type="button" class="btn btn-outline-secondary waves-effect" id="game-ultra" data-type="ultra"
+                data-selected="none">ultra high price</button>
+            </div>
+            <div class='buy-panel'>
+              <button type="button" class="btn btn-outline-secondary waves-effect" id="buy-ticket">buy ticket</button>
+            </div>
+          </div>
+        </div>
+        <div class='no-metamask'>
+          <img src='./images/metamask.png' width="230" height="230">
+          <label>It looks like you have no Metamask wallet installed. </label>
+          <label>Please setup a <a target='_blank' href='https://metamask.io/'>Metamask</a> account.</label>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/index.js"></script>
+</body>
+
+</html>
