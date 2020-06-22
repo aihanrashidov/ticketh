@@ -199,19 +199,19 @@ $('#buy-ticket').click(() => {
 
   if ($('#game-low').attr('data-selected') == 'selected') {
     type = 0;
-    price = 0.03;
+    price = 0.003;
   }
   else if ($('#game-medium').attr('data-selected') == 'selected') {
     type = 1;
-    price = 0.05;
+    price = 0.005;
   }
   else if ($('#game-high').attr('data-selected') == 'selected') {
     type = 2;
-    price = 0.1;
+    price = 0.008;
   }
   else {
     type = 3;
-    price = 0.5;
+    price = 0.01;
   }
 
   App.contracts.Ticketh.deployed().then((instance) => {
@@ -347,7 +347,7 @@ const getBlockHeight = () => {
 }
 
 const renderRest = () => {
-  const lotteries = [{ lotteryIndex: 0, type: 'low', price: 0.03 }, { lotteryIndex: 1, type: 'medium', price: 0.05 }, { lotteryIndex: 2, type: 'high', price: 0.1 }, { lotteryIndex: 3, type: 'ultra', price: 0.5 }]
+  const lotteries = [{ lotteryIndex: 0, type: 'low', price: 0.003 }, { lotteryIndex: 1, type: 'medium', price: 0.005 }, { lotteryIndex: 2, type: 'high', price: 0.008 }, { lotteryIndex: 3, type: 'ultra', price: 0.01 }]
 
   for (let i = 0; i < lotteries.length; i++) {
     getPlayers(lotteries[i].lotteryIndex, lotteries[i].type, lotteries[i].price);
